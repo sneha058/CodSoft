@@ -55,10 +55,20 @@ class ToDoScreen extends StatelessWidget {
                   leading: Checkbox(value: false, onChanged: (value) {
                     BlocProvider.of<ToDoBloc>(context).add(TaskCompleteEvent());
                   },),
-                  trailing: IconButton(icon: Icon(Icons.delete), onPressed: () {  },),
+                  trailing: Container(
+                    width: 100,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        IconButton(icon: Icon(Icons.edit), onPressed: () {  },),
+                        IconButton(icon: Icon(Icons.delete), onPressed: () {  },),
+                      ],
+                    ),
+                  ),
+
                 );
               }, separatorBuilder: (context, index) {
-                return Divider(thickness: 3,height: 23,);
+                return Divider(thickness: 3,height: 23,color: Colors.black,);
               }, itemCount: 1);
             }
             else{
