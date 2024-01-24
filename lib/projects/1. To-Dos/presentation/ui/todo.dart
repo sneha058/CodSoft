@@ -1,5 +1,10 @@
+import 'package:codsoft/projects/1.%20To-Dos/presentation/bloc/todo_bloc.dart';
+import 'package:codsoft/projects/1.%20To-Dos/presentation/bloc/todo_event.dart';
+import 'package:codsoft/projects/1.%20To-Dos/presentation/bloc/todo_state.dart';
+import 'package:codsoft/projects/1.%20To-Dos/presentation/ui/popup_window.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
   runApp(ToDoApp());
@@ -13,7 +18,10 @@ class ToDoApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.grey,
       ),
-      home: ToDoScreen(),
+      home: BlocProvider(
+        create: (context) => ToDoBloc(),
+        child: ToDoScreen(),
+      ),
       debugShowCheckedModeBanner: false,
     );
   }
@@ -39,36 +47,42 @@ class ToDoScreen extends StatelessWidget {
           ),
         ),
         body: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Center(
-              child: InkWell(
-                onTap: (){},
-                child: Container(
-                  height: 80,
-                  width: 80,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.blueGrey,
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.grey,
-                            spreadRadius: 3.0,
-                            blurRadius: 3.0,
-                            offset: Offset(0, 1))
-                      ]),
-                  child: Center(
-                    child: Icon(
-                      Icons.add,
-                      size: 32,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 30,
+              child: InkWell(onTap: () {
+                //................after tap pop the textfield window to enter the task..............//
+                BlocProvider.of<ToDoBloc>(context).add(TaskCreateEvent());
+              }, child: BlocBuilder<ToDoBloc, ToDoState>(
+                builder: (context, state) {
+                  if (state is TaskCreateState) {
+                        return PopUpWindow();
+                  }
+                  else {
+                    return Container(
+                      height: 60,
+                      width: 60,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.blueGrey,
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.grey,
+                                spreadRadius: 3.0,
+                                blurRadius: 3.0,
+                                offset: Offset(0, 1))
+                          ]),
+                      child: Center(
+                        child: Icon(
+                          Icons.add,
+                          size: 26,
+                          color: Colors.white,
+                        ),
+                      ),
+                    );
+                  }
+                },
+              )),
             ),
           ],
         ));
