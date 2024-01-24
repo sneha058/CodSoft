@@ -46,45 +46,79 @@ class ToDoScreen extends StatelessWidget {
             ),
           ),
         ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Center(
-              child: InkWell(onTap: () {
-                //................after tap pop the textfield window to enter the task..............//
-                BlocProvider.of<ToDoBloc>(context).add(TaskCreateEvent());
-              }, child: BlocBuilder<ToDoBloc, ToDoState>(
-                builder: (context, state) {
-                  if (state is TaskCreateState) {
-                        return PopUpWindow();
-                  }
-                  else {
-                    return Container(
-                      height: 60,
-                      width: 60,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.blueGrey,
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.grey,
-                                spreadRadius: 3.0,
-                                blurRadius: 3.0,
-                                offset: Offset(0, 1))
-                          ]),
-                      child: Center(
-                        child: Icon(
-                          Icons.add,
-                          size: 26,
-                          color: Colors.white,
-                        ),
-                      ),
-                    );
-                  }
-                },
-              )),
-            ),
-          ],
+        body: BlocBuilder<ToDoBloc, ToDoState>(
+          builder: (context, state) {
+            if (state is TaskAddState){
+              return ListView.separated(itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(state.task),
+                  leading: Checkbox(value: false, onChanged: (value) {
+                    BlocProvider.of<ToDoBloc>(context).add(TaskCompleteEvent());
+                  },),
+                  trailing: IconButton(icon: Icon(Icons.delete), onPressed: () {  },),
+                );
+              }, separatorBuilder: (context, index) {
+                return Divider(thickness: 3,height: 23,);
+              }, itemCount: 1);
+            }
+            else{
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  BlocBuilder<ToDoBloc, ToDoState>(
+                    builder: (context, state) {
+                      if (state is TaskAddState) {
+                        return ListView.builder(itemBuilder: (context, index) {
+                          return Text(state.task);
+                        },
+                        itemCount: 1,
+
+                        );
+                      }
+                      else {
+                        return Center(
+                          child: InkWell(onTap: () {
+                            //................after tap pop the textfield window to enter the task..............//
+                            BlocProvider.of<ToDoBloc>(context).add(
+                                TaskCreateEvent());
+                          }, child: BlocBuilder<ToDoBloc, ToDoState>(
+                            builder: (context, state) {
+                              if (state is TaskCreateState) {
+                                return PopUpWindow();
+                              }
+                              else {
+                                return Container(
+                                  height: 60,
+                                  width: 60,
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.blueGrey,
+                                      boxShadow: [
+                                        BoxShadow(
+                                            color: Colors.grey,
+                                            spreadRadius: 3.0,
+                                            blurRadius: 3.0,
+                                            offset: Offset(0, 1))
+                                      ]),
+                                  child: Center(
+                                    child: Icon(
+                                      Icons.add,
+                                      size: 26,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                );
+                              }
+                            },
+                          )),
+                        );
+                      }
+                    },
+                  ),
+                ],
+              );
+            }
+          },
         ));
   }
 }

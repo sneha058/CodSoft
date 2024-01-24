@@ -8,7 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 
 class PopUpWindow extends StatelessWidget {
-  TextEditingController task = TextEditingController();
+  TextEditingController taskController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,7 @@ class PopUpWindow extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: TextField(
-                    controller: task,
+                    controller: taskController,
                     decoration: InputDecoration(
                       labelText: "Enter Task",
                     ),
@@ -49,8 +49,7 @@ class PopUpWindow extends StatelessWidget {
                 ),
                 ElevatedButton(
                     onPressed: () {
-                      BlocProvider.of<ToDoBloc>(context).add(TaskAddEvent(task.text));
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => ToDoApp(),));
+                      BlocProvider.of<ToDoBloc>(context).add(TaskAddEvent(taskController.text));
                     },
                     child: Text(
                       "Add Task",
