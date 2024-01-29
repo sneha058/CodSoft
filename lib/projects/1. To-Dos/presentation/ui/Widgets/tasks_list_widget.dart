@@ -1,5 +1,8 @@
+import 'package:codsoft/projects/1.%20To-Dos/presentation/bloc/todo_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive/hive.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../bloc/todo_bloc.dart';
 import '../../bloc/todo_event.dart';
@@ -7,6 +10,7 @@ import '../../bloc/todo_event.dart';
 class TaskListWidget extends StatelessWidget {
 
   var state;
+
   TaskListWidget(this.state);
 
   @override
@@ -14,12 +18,13 @@ class TaskListWidget extends StatelessWidget {
     return ListView.separated(
         itemBuilder: (context, index) {
           return ListTile(
-            title: Text(state.task),
+            title: Text(state.taskList[index]),
             leading: Checkbox(
               value: false,
               onChanged: (value) {
                 BlocProvider.of<ToDoBloc>(context)
                     .add(TaskCompleteEvent());
+
               },
             ),
             trailing: Container(
@@ -36,7 +41,8 @@ class TaskListWidget extends StatelessWidget {
                   ),
                   IconButton(
                     icon: Icon(Icons.delete),
-                    onPressed: () {},
+                    onPressed: () {
+                    },
                   ),
                 ],
               ),
@@ -44,12 +50,18 @@ class TaskListWidget extends StatelessWidget {
           );
         },
         separatorBuilder: (context, index) {
-          return Divider(
-            thickness: 3,
-            height: 23,
-            color: Colors.black,
+          return Padding(
+            padding: const EdgeInsets.only(left: 30,right: 30,top: 8, bottom: 8),
+            child: Divider(
+              thickness: 1,
+              color: Colors.black,
+            ),
           );
         },
-        itemCount: 1);
-  }
+        itemCount: state.taskList.length);
+
+
 }
+}
+
+

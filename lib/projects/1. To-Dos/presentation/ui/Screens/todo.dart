@@ -7,8 +7,10 @@ import 'package:codsoft/projects/1.%20To-Dos/presentation/ui/Widgets/tasks_list_
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive_flutter/adapters.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+Future<void> main() async {
   runApp(ToDoApp());
 }
 
@@ -48,24 +50,26 @@ class ToDoScreen extends StatelessWidget {
             ),
           ),
         ),
-        body: BlocBuilder<ToDoBloc, ToDoState>(
-            builder: (context, state) {
-              if (state is TaskAddState) {
-                //.....................for (3) go to popup_window...................................
-                //.....................(4) After clicking the Add Task button of the  pop-up window, with the task entered a list tile is created..................
-                return Stack(
-                  children:[
-                    TaskListWidget(state),
-                    RoundAddWidget(),
-                ]);
-              } else {
-                //...............................................(1) Is on the round_add_widget file...................................................
-              //..............................(2) After pressing the button a pop-up window to enter the task appears............................
-              return RoundAddWidget();
-              }
-            }
-        ));
+        body: BlocBuilder<ToDoBloc, ToDoState>(builder: (context, state) {
+          if (state is TaskAddState) {
+            //.....................for (3) go to popup_window...................................
+            //.....................(4) After clicking the Add Task button of the  pop-up window, with the task entered a list tile is created..................
+            return Stack(children: [
+              TaskListWidget(state),
+              Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                    height: 70,
+                    width: double.infinity,
+                    color: Colors.white,
+                  )),
+              RoundAddWidget(),
+            ]);
+          } else {
+            //...............................................(1) Is on the round_add_widget file...................................................
+            //..............................(2) After pressing the button a pop-up window to enter the task appears............................
+            return RoundAddWidget();
+          }
+        }));
   }
-
-
 }

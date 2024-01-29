@@ -7,7 +7,10 @@ class TaskAddEvent extends ToDoEvent{
   TaskAddEvent(this.task);
 }
 
-class TaskDeleteEvent extends ToDoEvent{}
+class TaskDeleteEvent extends ToDoEvent{
+  String task;
+  TaskDeleteEvent(this.task);
+}
 
 class TaskEditEvent extends ToDoEvent{}
 

@@ -1,23 +1,21 @@
-abstract class ToDoState{}
+abstract class ToDoState {}
 
-class ToDoInitialState extends ToDoState{}
+class ToDoInitialState extends ToDoState {}
 
-class TaskCreateState extends ToDoState{}
+class TaskCreateState extends ToDoState {}
 
-class TaskAddState extends ToDoState{
-  String task;
-  TaskAddState(this.task);
+class TaskAddState extends ToDoState {
+  List<String> taskList;
+  TaskAddState(this.taskList);
 }
 
-class TaskEmptyState extends ToDoState{
+class TaskEmptyState extends ToDoState {
   String errorMessage;
   TaskEmptyState(this.errorMessage);
 }
 
-class TaskDeleteState extends ToDoState{}
+class TaskDeleteState extends ToDoState {}
 
-class TaskEditState extends ToDoState{}
+class TaskEditState extends ToDoState {}
 
-class TaskCompleteState extends ToDoState{}
-
-
+class TaskCompleteState extends ToDoState {}

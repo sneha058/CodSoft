@@ -1,13 +1,18 @@
+
 import 'package:codsoft/projects/1.%20To-Dos/presentation/bloc/todo_event.dart';
 import 'package:codsoft/projects/1.%20To-Dos/presentation/bloc/todo_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ToDoBloc extends Bloc<ToDoEvent, ToDoState>{
+
+  List<String> taskList= [];
+
   ToDoBloc(): super(ToDoInitialState()){
     on<TaskCreateEvent>((event, emit) => emit(TaskCreateState()));
     on<TaskAddEvent>((event, emit) {
       if (event.task != null && event.task.isNotEmpty){
-        emit(TaskAddState(event.task));
+        taskList.add(event.task);
+        emit(TaskAddState(taskList));
       }
       else {
         emit(TaskEmptyState("Please enter a task"));

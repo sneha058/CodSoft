@@ -11,14 +11,17 @@ class RoundAddWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(30.0),
+      padding: const EdgeInsets.all(16.0),
       child: Align(
-        alignment: Alignment.bottomCenter,
-        child: InkWell(onTap: () {
+          alignment: Alignment.bottomCenter,
+          child: InkWell(onTap: () {
           //................after tap pop the textfield window to enter the task..............//
           BlocProvider.of<ToDoBloc>(context)
               .add(TaskCreateEvent());
-        }, child: BlocBuilder<ToDoBloc, ToDoState>(
+
+
+
+                  }, child: BlocBuilder<ToDoBloc, ToDoState>(
           builder: (context, state) {
             if (state is TaskCreateState) {
               return PopUpWindow();
@@ -49,7 +52,7 @@ class RoundAddWidget extends StatelessWidget {
               );
             }
           },
-        )),
+                  )),
       ),
     );
   }

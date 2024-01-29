@@ -5,6 +5,8 @@ import 'package:codsoft/projects/1.%20To-Dos/presentation/ui/Screens/todo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive/hive.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class PopUpWindow extends StatelessWidget {
@@ -53,7 +55,10 @@ class PopUpWindow extends StatelessWidget {
 
                   ElevatedButton(
                       onPressed: () {
-                        BlocProvider.of<ToDoBloc>(context).add(TaskAddEvent(taskController.text));
+
+                        BlocProvider.of<ToDoBloc>(context).add(TaskAddEvent(taskController.text.toString()));
+                        
+
                       },
                       child: Text(
                         "Add Task",
