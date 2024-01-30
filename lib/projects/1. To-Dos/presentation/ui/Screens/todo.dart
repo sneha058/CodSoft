@@ -1,9 +1,9 @@
 import 'package:codsoft/projects/1.%20To-Dos/presentation/bloc/todo_bloc.dart';
 import 'package:codsoft/projects/1.%20To-Dos/presentation/bloc/todo_event.dart';
 import 'package:codsoft/projects/1.%20To-Dos/presentation/bloc/todo_state.dart';
-import 'package:codsoft/projects/1.%20To-Dos/presentation/ui/Screens/popup_window.dart';
-import 'package:codsoft/projects/1.%20To-Dos/presentation/ui/Widgets/round_add_widget.dart';
+import 'package:codsoft/projects/1.%20To-Dos/presentation/ui/Widgets/add_task_button.dart';
 import 'package:codsoft/projects/1.%20To-Dos/presentation/ui/Widgets/tasks_list_widget.dart';
+import 'package:dartz/dartz.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,7 +20,7 @@ class ToDoApp extends StatelessWidget {
     return MaterialApp(
       title: "ToDo App",
       theme: ThemeData(
-        primarySwatch: Colors.grey,
+        primarySwatch: Colors.deepPurple,
       ),
       home: BlocProvider(
         create: (context) => ToDoBloc(),
@@ -45,31 +45,33 @@ class ToDoScreen extends StatelessWidget {
               style: TextStyle(
                 fontWeight: FontWeight.w700,
                 fontSize: 30,
-                color: Colors.blueGrey,
+                color: Colors.deepPurple,
               ),
             ),
           ),
         ),
-        body: BlocBuilder<ToDoBloc, ToDoState>(builder: (context, state) {
-          if (state is TaskAddState) {
-            //.....................for (3) go to popup_window...................................
-            //.....................(4) After clicking the Add Task button of the  pop-up window, with the task entered a list tile is created..................
-            return Stack(children: [
-              TaskListWidget(state),
-              Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Container(
-                    height: 70,
-                    width: double.infinity,
-                    color: Colors.white,
-                  )),
-              RoundAddWidget(),
-            ]);
-          } else {
-            //...............................................(1) Is on the round_add_widget file...................................................
-            //..............................(2) After pressing the button a pop-up window to enter the task appears............................
-            return RoundAddWidget();
-          }
-        }));
+        body: BlocBuilder<ToDoBloc, ToDoState>(
+          builder: (context, state) {
+            if (state is TaskAddState){
+
+              //.........If task is added the task List is built.......
+
+              return Stack(
+                children: [
+                  TaskListWidget(state),
+                  AddTaskButton(),
+                ],
+              );
+            }
+            else {
+
+              //.......Initially there's only the add button...........
+
+              return AddTaskButton();
+            }
+          },
+        )
+    );
   }
 }
+

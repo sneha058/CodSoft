@@ -2,7 +2,7 @@ abstract class ToDoState {}
 
 class ToDoInitialState extends ToDoState {}
 
-class TaskCreateState extends ToDoState {}
+class TaskEnterState extends ToDoState{}
 
 class TaskAddState extends ToDoState {
   List<String> taskList;

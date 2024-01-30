@@ -8,7 +8,16 @@ class ToDoBloc extends Bloc<ToDoEvent, ToDoState>{
   List<String> taskList= [];
 
   ToDoBloc(): super(ToDoInitialState()){
-    on<TaskCreateEvent>((event, emit) => emit(TaskCreateState()));
+
+    on<TaskEnterEvent>((event, emit){
+      if (event.enterTask.length >= 1){
+        emit (TaskEnterState());
+      }
+      else {
+        emit(TaskEmptyState("Please enter a task!!!"));
+      }
+    });
+
     on<TaskAddEvent>((event, emit) {
       if (event.task != null && event.task.isNotEmpty){
         taskList.add(event.task);

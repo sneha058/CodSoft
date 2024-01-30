@@ -13,18 +13,27 @@ class TaskListWidget extends StatelessWidget {
 
   TaskListWidget(this.state);
 
+  bool taskStatus = false;
+
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
         itemBuilder: (context, index) {
           return ListTile(
-            title: Text(state.taskList[index]),
-            leading: Checkbox(
-              value: false,
-              onChanged: (value) {
-                BlocProvider.of<ToDoBloc>(context)
-                    .add(TaskCompleteEvent());
-
+            title: Text(state.taskList[index],
+             /* style: TextStyle(
+                  decoration: taskStatus
+                      ? TextDecoration.lineThrough
+                      : TextDecoration.none), */
+            ),
+            leading: BlocBuilder<ToDoBloc, ToDoState>(
+              builder: (context, state) {
+                return Checkbox(
+                  value: taskStatus,
+                  onChanged: (value) {
+                    taskStatus = !taskStatus;
+                  },
+                );
               },
             ),
             trailing: Container(
@@ -36,12 +45,13 @@ class TaskListWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   IconButton(
-                    icon: Icon(Icons.edit),
+                    icon: Icon(Icons.edit, color: Colors.deepPurple,),
                     onPressed: () {},
                   ),
                   IconButton(
-                    icon: Icon(Icons.delete),
+                    icon: Icon(Icons.delete, color: Colors.deepPurple,),
                     onPressed: () {
+
                     },
                   ),
                 ],
@@ -51,7 +61,8 @@ class TaskListWidget extends StatelessWidget {
         },
         separatorBuilder: (context, index) {
           return Padding(
-            padding: const EdgeInsets.only(left: 30,right: 30,top: 8, bottom: 8),
+            padding: const EdgeInsets.only(
+                left: 30, right: 30, top: 8, bottom: 8),
             child: Divider(
               thickness: 1,
               color: Colors.black,
@@ -59,9 +70,5 @@ class TaskListWidget extends StatelessWidget {
           );
         },
         itemCount: state.taskList.length);
-
-
+  }
 }
-}
-
-
