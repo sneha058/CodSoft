@@ -1,4 +1,5 @@
 import 'package:codsoft/projects/1.%20To-Dos/presentation/bloc/todo_state.dart';
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
@@ -13,25 +14,23 @@ class TaskListWidget extends StatelessWidget {
 
   TaskListWidget(this.state);
 
-  bool taskStatus = false;
-
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
         itemBuilder: (context, index) {
           return ListTile(
             title: Text(state.taskList[index],
-             /* style: TextStyle(
+              /*style: TextStyle(
                   decoration: taskStatus
                       ? TextDecoration.lineThrough
-                      : TextDecoration.none), */
+                      : TextDecoration.none),*/
             ),
             leading: BlocBuilder<ToDoBloc, ToDoState>(
               builder: (context, state) {
                 return Checkbox(
-                  value: taskStatus,
+                  value: false,
                   onChanged: (value) {
-                    taskStatus = !taskStatus;
+                    print(index);
                   },
                 );
               },
@@ -48,10 +47,14 @@ class TaskListWidget extends StatelessWidget {
                     icon: Icon(Icons.edit, color: Colors.deepPurple,),
                     onPressed: () {},
                   ),
-                  IconButton(
-                    icon: Icon(Icons.delete, color: Colors.deepPurple,),
-                    onPressed: () {
-
+                  BlocBuilder<ToDoBloc, ToDoState>(
+                    builder: (context, state) {
+                      return IconButton(
+                        icon: Icon(Icons.delete, color: Colors.deepPurple,),
+                        onPressed: () {
+                          print(index);
+                        },
+                      );
                     },
                   ),
                 ],

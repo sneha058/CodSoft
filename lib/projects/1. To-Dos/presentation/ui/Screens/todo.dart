@@ -55,6 +55,7 @@ class ToDoScreen extends StatelessWidget {
             if (state is TaskAddState){
 
               //.........If task is added the task List is built.......
+              //........If task stauts is changed the task list is built with the checkbox ticked....
 
               return Stack(
                 children: [

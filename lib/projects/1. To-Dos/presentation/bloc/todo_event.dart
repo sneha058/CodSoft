@@ -7,7 +7,13 @@ class TaskEnterEvent extends ToDoEvent{
 
 class TaskAddEvent extends ToDoEvent{
   String task;
-  TaskAddEvent(this.task);
+  int? taskIndex;
+  TaskAddEvent(this.task){}
+}
+
+class TaskCompleteEvent extends ToDoEvent{
+  int index;
+  TaskCompleteEvent(this.index);
 }
 
 class TaskDeleteEvent extends ToDoEvent{
@@ -17,4 +23,3 @@ class TaskDeleteEvent extends ToDoEvent{
 
 class TaskEditEvent extends ToDoEvent{}
 
-class TaskCompleteEvent extends ToDoEvent{}
