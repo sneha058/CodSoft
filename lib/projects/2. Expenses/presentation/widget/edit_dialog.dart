@@ -5,12 +5,13 @@ import 'package:codsoft/projects/2.%20Expenses/data/model/expense_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-Future<void> editDialog(BuildContext context, ExpenseModel expenseModel ,String category, bool? isIncome, String income, String expense) async {
+Future<void> editDialog(BuildContext context, ExpenseModel expenseModel,
+    String category, bool? isIncome, String income, String expense) async {
   TextEditingController cashController = TextEditingController();
   TextEditingController categoryController = TextEditingController();
 
   categoryController.text = category;
-  cashController.text = (isIncome == true)? income : expense;
+  cashController.text = (isIncome == true) ? income : expense;
 
   return showDialog(
     context: context,
@@ -45,40 +46,27 @@ Future<void> editDialog(BuildContext context, ExpenseModel expenseModel ,String 
           ),
         ),
         actions: [
-          Column(
-            children: [
-              FilledButton(
-                  onPressed: () async {
-                    Navigator.pop(context);
+          FilledButton(
+              onPressed: () {
+                cashController.clear();
+                categoryController.clear();
+                Navigator.pop(context);
+              },
+              child: Text("Cancel")),
+          FilledButton(
+              onPressed: () async {
+                Navigator.pop(context);
 
-                    expenseModel.expense = cashController.text.toString();
-                    expenseModel.category = categoryController.text.toString();
-                    await expenseModel.save();
-                    cashController.clear();
-                    categoryController.clear();
-                  },
-                  child: Text("Expense")),
-              FilledButton(
-                  onPressed: () async {
-                    Navigator.pop(context);
-                    expenseModel.income = cashController.text.toString();
-                    expenseModel.category = categoryController.text.toString();
-                    await expenseModel.save();
-                    cashController.clear();
-                    categoryController.clear();
+                (isIncome == true)
+                    ? expenseModel.income = cashController.text.toString()
+                    : expenseModel.expense = cashController.text.toString();
+                expenseModel.category = categoryController.text.toString();
+                await expenseModel.save();
+                cashController.clear();
+                categoryController.clear();
+              },
+              child: Text("Update")),
 
-                  },
-                  child: Text("Income")),
-
-              FilledButton(
-                  onPressed: () {
-                    cashController.clear();
-                    categoryController.clear();
-                    Navigator.pop(context);
-                  },
-                  child: Text("Cancel")),
-            ],
-          ),
         ],
       );
     },
