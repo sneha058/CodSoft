@@ -7,11 +7,12 @@ Future<void> alertDialog(BuildContext context) async {
   TextEditingController cashController = TextEditingController();
   TextEditingController categoryController = TextEditingController();
 
+
   return showDialog(
     context: context,
     builder: (context) {
       return AlertDialog(
-        title: Text("Add Transaction"),
+        title: Text("Add Task"),
         content: IntrinsicHeight(
           child: Column(
             children: [
@@ -48,10 +49,11 @@ Future<void> alertDialog(BuildContext context) async {
 
                     final data = ExpenseModel(
                         expense: cashController.text.toString(),
-                        category: categoryController.text.toString());
+                        category: categoryController.text.toString(),isIncome: false);
                     final box = ExpenseBox.getExpense();
                     box.add(data);
                     cashController.clear();
+                    categoryController.clear();
                   },
                   child: Text("Expense")),
               FilledButton(
@@ -59,9 +61,12 @@ Future<void> alertDialog(BuildContext context) async {
                     Navigator.pop(context);
                     final data = ExpenseModel(
                         income: cashController.text.toString(),
-                        category: categoryController.text.toString());
+                        category: categoryController.text.toString(), isIncome: true);
                     final box = ExpenseBox.getExpense();
                     box.add(data);
+                    cashController.clear();
+                    categoryController.clear();
+
                   },
                   child: Text("Income")),
               FilledButton(

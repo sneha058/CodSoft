@@ -19,17 +19,23 @@ class ExpenseModelAdapter extends TypeAdapter<ExpenseModel> {
     return ExpenseModel(
       income: fields[0] as dynamic,
       expense: fields[1] as dynamic,
+      category: fields[2] as dynamic,
+      total: fields[3] as dynamic,
     );
   }
 
   @override
   void write(BinaryWriter writer, ExpenseModel obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.income)
       ..writeByte(1)
-      ..write(obj.expense);
+      ..write(obj.expense)
+      ..writeByte(2)
+      ..write(obj.category)
+      ..writeByte(3)
+      ..write(obj.total);
   }
 
   @override

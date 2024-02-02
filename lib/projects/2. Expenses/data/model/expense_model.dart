@@ -13,9 +13,13 @@ class ExpenseModel extends HiveObject{
   @HiveField(2)
   var category;
 
+
   @HiveField(3)
   var total;
 
-  ExpenseModel({this.income,this.expense,this.category,this.total});
+  @HiveField(4)
+  bool? isIncome;
+
+  ExpenseModel({this.income,this.expense,this.category,this.total,this.isIncome});
 
 }

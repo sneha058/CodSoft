@@ -1,5 +1,6 @@
 import 'package:codsoft/projects/2.%20Expenses/data/data_sources/expense_box.dart';
 import 'package:codsoft/projects/2.%20Expenses/data/model/expense_model.dart';
+import 'package:codsoft/projects/2.%20Expenses/presentation/widget/alert_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 
@@ -15,9 +16,11 @@ class TransactionCard extends StatelessWidget {
 
           //.......converting the expense value into integer......
 
-          double sum = data.fold(0, (sum, expense) {
-            double? intExpense = double.tryParse(expense.expense ?? '');
-            return sum + (intExpense ?? 0.0);
+          double sum = data.fold(0, (sum, model) {
+            double? intExpense = double.tryParse(model.expense ?? '');
+            double? intIncome = double.tryParse(model.income ?? '');
+
+            return sum - (intExpense ?? 0.0) + (intIncome ?? 0.0);
           });
 
           return Column(
@@ -33,7 +36,7 @@ class TransactionCard extends StatelessWidget {
                     ),
                     Text(
                       sum.toString(),
-                      style: TextStyle(fontSize: 23),
+                      style: TextStyle(fontSize: 33, color: (sum >= 0)? Colors.green : Colors.red, fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
@@ -53,16 +56,20 @@ class TransactionCard extends StatelessWidget {
                             children: [
                               IconButton(
                                   onPressed: () {
-
-                                  }, icon: Icon(Icons.edit)),
+                                    alertDialog(context);
+                                  },
+                                  icon: Icon(Icons.edit)),
                               Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    data[index].expense.toString(),
+                                    (data[index].isIncome == true)
+                                        ? data[index].income.toString()
+                                        : data[index].expense.toString(),
                                     style: TextStyle(
                                         fontSize: 23,
-                                        fontWeight: FontWeight.bold),
+                                        fontWeight: FontWeight.bold,
+                                    color:(data[index].isIncome == true) ? Colors.green : Colors.red ),
                                   ),
                                   Text(data[index].category.toString()),
                                 ],
@@ -80,6 +87,7 @@ class TransactionCard extends StatelessWidget {
                   },
                 ),
               ),
+              Container(height: 90,)
             ],
           );
         });
