@@ -10,17 +10,8 @@ class ToDoBloc extends Bloc<ToDoEvent, ToDoState>{
 
   ToDoBloc(): super(ToDoInitialState()){
 
-    on<TaskAddEvent>((event, emit) {
-      if (event.task != null && event.task.isNotEmpty){
-        taskList.add(event.task);
-        taskStatusList = List.generate(taskList.length, (index) => false);
-        emit(TaskAddState(taskList, taskStatusList));
-      }
-      else {
-        emit(TaskEmptyState("Please enter a task"));
-      }
-    });
-
+    on<TaskAddEvent>((event, emit) => emit(TaskAddState()));
+    on<TaskCompleteEvent>((event, emit) => emit(TaskCompleteState()));
     on<TaskDeleteEvent>((event, emit) => emit(TaskDeleteState()));
     on<TaskEditEvent>((event, emit) => emit(TaskEditState()));
 

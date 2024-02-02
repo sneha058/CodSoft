@@ -1,3 +1,4 @@
+import 'package:codsoft/projects/1.%20To-Dos/data/model/to_do_model.dart';
 import 'package:codsoft/projects/1.%20To-Dos/presentation/bloc/todo_bloc.dart';
 import 'package:codsoft/projects/1.%20To-Dos/presentation/bloc/todo_event.dart';
 import 'package:codsoft/projects/1.%20To-Dos/presentation/bloc/todo_state.dart';
@@ -8,9 +9,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:path_provider/path_provider.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  var directory = await getApplicationDocumentsDirectory();
+  Hive.init(directory.path);
+  Hive.registerAdapter(ToDoModelAdapter());
+  await Hive.openBox<ToDoModel>("task");
   runApp(ToDoApp());
 }
 
@@ -50,28 +56,12 @@ class ToDoScreen extends StatelessWidget {
             ),
           ),
         ),
-        body: BlocBuilder<ToDoBloc, ToDoState>(
-          builder: (context, state) {
-            if (state is TaskAddState){
-
-              //.........If task is added the task List is built.......
-              //........If task stauts is changed the task list is built with the checkbox ticked....
-
-              return Stack(
+        body:  Stack(
                 children: [
-                  TaskListWidget(state),
+                  TaskListWidget(),
                   AddTaskButton(),
                 ],
-              );
-            }
-            else {
-
-              //.......Initially there's only the add button...........
-
-              return AddTaskButton();
-            }
-          },
-        )
+              )
     );
   }
 }

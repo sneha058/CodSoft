@@ -1,16 +1,16 @@
+import 'package:codsoft/projects/1.%20To-Dos/data/data_sources/boxes/to_do_box.dart';
+import 'package:codsoft/projects/1.%20To-Dos/data/model/to_do_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive/hive.dart';
 
-import '../../bloc/todo_bloc.dart';
-import '../../bloc/todo_event.dart';
-import '../../bloc/todo_state.dart';
 
 class AddTaskButton extends StatelessWidget {
 
   TextEditingController taskController = TextEditingController();
 
-  void createNewTask(BuildContext context, ToDoBloc toDoBloc) {
+  void createNewTask(BuildContext context) {
     showDialog(
       context: context,
       builder: (context) {
@@ -31,10 +31,16 @@ class AddTaskButton extends StatelessWidget {
                 },
                 child: Text("Cancel")),
             FilledButton(
-                onPressed: () {
+                onPressed: () async {
 
-                    toDoBloc.add(TaskAddEvent(taskController.text.toString()));
                     Navigator.pop(context);
+
+                    //.......Implementing Hive........
+                  final data = ToDoModel(task: taskController.text.toString() /*, isCompleted: false*/);
+                   final box = ToDoBox.getData();
+                   box.add(data);
+                   taskController.clear();
+
                 },
                 child: Text("Add")),
           ],
@@ -53,7 +59,7 @@ class AddTaskButton extends StatelessWidget {
           onPressed: () {
 
             //.......Explicitly passing the Bloc context to avoid overriding.....
-            createNewTask(context, BlocProvider.of<ToDoBloc>(context));
+            createNewTask(context);
 
           },
           child: Icon(

@@ -1,25 +1,12 @@
 abstract class ToDoEvent {}
 
-class TaskEnterEvent extends ToDoEvent{
-  var enterTask;
-  TaskEnterEvent(this.enterTask);
-}
+class TaskEnterEvent extends ToDoEvent{}
 
-class TaskAddEvent extends ToDoEvent{
-  String task;
-  int? taskIndex;
-  TaskAddEvent(this.task){}
-}
+class TaskAddEvent extends ToDoEvent{}
 
-class TaskCompleteEvent extends ToDoEvent{
-  int index;
-  TaskCompleteEvent(this.index);
-}
+class TaskCompleteEvent extends ToDoEvent{}
 
-class TaskDeleteEvent extends ToDoEvent{
-  String task;
-  TaskDeleteEvent(this.task);
-}
+class TaskDeleteEvent extends ToDoEvent{}
 
 class TaskEditEvent extends ToDoEvent{}
 
