@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'alert_dialog.dart';
+import 'add_dialog.dart';
 
 class AddButton extends StatelessWidget{
   @override
@@ -11,7 +11,7 @@ class AddButton extends StatelessWidget{
       child: Align(
           alignment: Alignment.bottomCenter,
           child: FloatingActionButton(onPressed: () async {
-            return alertDialog(context);
+            return addDialog(context);
           },
             shape: CircleBorder(),
             child: Icon(Icons.add),)),

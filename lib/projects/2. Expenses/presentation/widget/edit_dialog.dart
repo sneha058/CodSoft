@@ -1,18 +1,22 @@
+import 'dart:math';
+
 import 'package:codsoft/projects/2.%20Expenses/data/data_sources/expense_box.dart';
 import 'package:codsoft/projects/2.%20Expenses/data/model/expense_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-Future<void> alertDialog(BuildContext context) async {
+Future<void> editDialog(BuildContext context, ExpenseModel expenseModel ,String category, bool? isIncome, String income, String expense) async {
   TextEditingController cashController = TextEditingController();
   TextEditingController categoryController = TextEditingController();
 
+  categoryController.text = category;
+  cashController.text = (isIncome == true)? income : expense;
 
   return showDialog(
     context: context,
     builder: (context) {
       return AlertDialog(
-        title: Text("Add Task"),
+        title: Text("Edit Transaction"),
         content: IntrinsicHeight(
           child: Column(
             children: [
@@ -44,31 +48,28 @@ Future<void> alertDialog(BuildContext context) async {
           Column(
             children: [
               FilledButton(
-                  onPressed: () {
+                  onPressed: () async {
                     Navigator.pop(context);
 
-                    final data = ExpenseModel(
-                        expense: cashController.text.toString(),
-                        category: categoryController.text.toString(),isIncome: false);
-                    final box = ExpenseBox.getExpense();
-                    box.add(data);
+                    expenseModel.expense = cashController.text.toString();
+                    expenseModel.category = categoryController.text.toString();
+                    await expenseModel.save();
                     cashController.clear();
                     categoryController.clear();
                   },
                   child: Text("Expense")),
               FilledButton(
-                  onPressed: () {
+                  onPressed: () async {
                     Navigator.pop(context);
-                    final data = ExpenseModel(
-                        income: cashController.text.toString(),
-                        category: categoryController.text.toString(), isIncome: true);
-                    final box = ExpenseBox.getExpense();
-                    box.add(data);
+                    expenseModel.income = cashController.text.toString();
+                    expenseModel.category = categoryController.text.toString();
+                    await expenseModel.save();
                     cashController.clear();
                     categoryController.clear();
 
                   },
                   child: Text("Income")),
+
               FilledButton(
                   onPressed: () {
                     cashController.clear();

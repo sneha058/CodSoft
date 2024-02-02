@@ -24,7 +24,9 @@ class TaskListWidget extends StatelessWidget {
   Future<void> editTask(BuildContext context, ToDoModel todoModel,
       String task) async {
     TextEditingController taskController = TextEditingController();
+
     taskController.text = task;
+
     showDialog(
       context: context,
       builder: (context) {
