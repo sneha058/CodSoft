@@ -36,7 +36,7 @@ class AddTaskButton extends StatelessWidget {
                     Navigator.pop(context);
 
                     //.......Implementing Hive........
-                  final data = ToDoModel(task: taskController.text.toString() /*, isCompleted: false*/);
+                  final data = ToDoModel(task: taskController.text.toString() , isCompleted: false);
                    final box = ToDoBox.getData();
                    box.add(data);
                    taskController.clear();

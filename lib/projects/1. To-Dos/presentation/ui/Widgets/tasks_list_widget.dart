@@ -76,9 +76,9 @@ class TaskListWidget extends StatelessWidget {
                 leading: BlocBuilder<ToDoBloc, ToDoState>(
                   builder: (context, state) {
                     return Checkbox(
-                        value: /*data[index].isCompleted ?? */ false,
+                        value: data[index].isCompleted,
                         onChanged:(value) {
-                          /*taskStatus(context, data[index], value ?? false);*/
+                          taskStatus(context, data[index], value!);
                         }
                     );
                   },
@@ -123,5 +123,11 @@ class TaskListWidget extends StatelessWidget {
         }
 
     );
+  }
+
+  void taskStatus(BuildContext context, ToDoModel todoModel, bool value) {
+    todoModel.isCompleted = value ;
+    print(todoModel.isCompleted);
+    todoModel.save();
   }
 }
