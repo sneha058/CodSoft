@@ -1,7 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:just_audio/just_audio.dart';
 
 class MusicPlayerHomeScreen extends StatelessWidget{
+
+  AudioPlayer audioPlayer = AudioPlayer();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,7 +21,27 @@ class MusicPlayerHomeScreen extends StatelessWidget{
           IconButton(onPressed: (){}, icon: Icon(Icons.search, color: Colors.white,)),
         ],
       ),
-      body: ListView.builder(itemCount: 20,
+      body: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          FloatingActionButton(
+            shape: CircleBorder(),
+            onPressed: (){
+              playSong();
+            },
+            child : Icon(Icons.play_arrow)
+          ),
+          FloatingActionButton(
+              shape: CircleBorder(),
+              onPressed: (){
+                pauseSong();
+              },
+              child : Icon(Icons.pause)
+          ),
+        ],
+      )
+      /*ListView.builder(itemCount: 20,
           physics: BouncingScrollPhysics(),
           itemBuilder: (context, index) {
             return Container(
@@ -35,8 +59,22 @@ class MusicPlayerHomeScreen extends StatelessWidget{
 
               ),
             );
-          },),
+          },),*/
     );
   }
-  
+
+  Future<void> playSong() async {
+    try {
+      await audioPlayer.setAsset('assets/music_player_assets/music/Adele_-_Someone_Like_You.mp3');
+      await audioPlayer.play();
+    } catch (e) {
+      print('Error playing song: $e');
+    }
+  }
+
+  Future<void> pauseSong() async {
+    await audioPlayer.pause();
+  }
+
+
 }

@@ -76,7 +76,21 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/music_player_assets/music/*
+    - assets/music_player_assets/music/Adele_-_Someone_Like_You.mp3
+    - assets/music_player_assets/music/Adele___Million_Years_Ago_Lyric.mp3
+    - assets/music_player_assets/music/Bimbaakash-Khai_[Lyrical_Video].mp3
+    - assets/music_player_assets/music/Bipul_Chettri_-_Wildfire_(Dadhelo)(1).mp3
+    - assets/music_player_assets/music/Ed_Sheeran_-_Thinking_Out_Loud_[Official_Video].mp3
+    - assets/music_player_assets/music/Jaise_Mera_Tu.mp3
+    - assets/music_player_assets/music/One_Direction_-_One_Thing_(Official_Video).mp3
+    - assets/music_player_assets/music/One_Direction_-_You_&_I_(Official_Video).mp3
+    - assets/music_player_assets/music/Taylor+Swift+-+Style.mp3
+    - assets/music_player_assets/music/Taylor_Swift_-_Begin_Again.mp3
+    - assets/music_player_assets/music/Taylor_Swift_-_Teardrops_On_My_Guitar.mp3
+    - assets/music_player_assets/music/Taylor_Swift_-_Wildest_Dreams.mp3
+    - assets/music_player_assets/music/Tera_Woh_Pyar_(Nawazishein_Karam),_Momina_Mustehsan_&_Asim_Azhar,_Episode_6,_Coke_Studio_Season_9.mp3
+    - assets/music_player_assets/music/Tose_Naina.mp3
+    - assets/music_player_assets/music/Yaad_Ma_Rakhnechhu_-_Official_Lyrical_video_-_Swoopna_Suman.mp3
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
