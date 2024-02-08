@@ -127,7 +127,6 @@ class TaskListWidget extends StatelessWidget {
 
   void taskStatus(BuildContext context, ToDoModel todoModel, bool value) {
     todoModel.isCompleted = value ;
-    print(todoModel.isCompleted);
     todoModel.save();
   }
 }

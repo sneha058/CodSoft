@@ -21,6 +21,7 @@ class ExpenseModelAdapter extends TypeAdapter<ExpenseModel> {
       expense: fields[1] as dynamic,
       category: fields[2] as dynamic,
       total: fields[3] as dynamic,
+      isIncome: fields[4] as bool?,
     );
   }
 
@@ -35,7 +36,9 @@ class ExpenseModelAdapter extends TypeAdapter<ExpenseModel> {
       ..writeByte(2)
       ..write(obj.category)
       ..writeByte(3)
-      ..write(obj.total);
+      ..write(obj.total)
+      ..writeByte(4)
+      ..write(obj.isIncome);
   }
 
   @override

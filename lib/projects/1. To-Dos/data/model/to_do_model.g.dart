@@ -18,15 +18,18 @@ class ToDoModelAdapter extends TypeAdapter<ToDoModel> {
     };
     return ToDoModel(
       task: fields[0] as String,
+      isCompleted: fields[1] as bool?,
     );
   }
 
   @override
   void write(BinaryWriter writer, ToDoModel obj) {
     writer
-      ..writeByte(1)
+      ..writeByte(2)
       ..writeByte(0)
-      ..write(obj.task);
+      ..write(obj.task)
+      ..writeByte(1)
+      ..write(obj.isCompleted);
   }
 
   @override
