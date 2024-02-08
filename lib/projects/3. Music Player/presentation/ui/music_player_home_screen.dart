@@ -57,14 +57,16 @@ class MusicPlayerHomeScreen extends StatelessWidget {
                   builder: (context, state) {
                     return IconButton(
                       onPressed: () {
-                        /*playSong(currentSong.musicPath);*/
+
                         if (isTileSelected[index] == true) {
                           isTileSelected[index] = !isTileSelected[index];
+                          pauseSong();
                         } else {
                           for (int i = 0; i < isTileSelected.length; i++) {
                             isTileSelected[i] = false;
                           }
                           isTileSelected[index] = true;
+                          playSong(currentSong.musicPath);
                         }
 
                         /*print(isTileSelected);*/
