@@ -21,18 +21,15 @@ class MusicPlayerHomeScreen extends StatelessWidget {
           "Music Player",
           style: TextStyle(color: Colors.white),
         ),
-        leading: IconButton(
-          onPressed: () {},
-          icon: Icon(
+        leading:  Icon(
             Icons.list_sharp,
             color: Colors.white,
           ),
-        ),
         actions: [
           IconButton(
               onPressed: () {},
               icon: Icon(
-                Icons.search,
+                Icons.shuffle,
                 color: Colors.white,
               )),
         ],
@@ -41,7 +38,12 @@ class MusicPlayerHomeScreen extends StatelessWidget {
         itemCount: musicList.length,
         physics: BouncingScrollPhysics(),
         itemBuilder: (context, index) {
+
           MusicPlayerModel currentSong = musicList[index];
+          MusicPlayerModel previousSong;
+          MusicPlayerModel nextSong;
+          int previousIndex = index-1;
+          int nextIndex = index+1;
 
           return Container(
             margin: EdgeInsets.fromLTRB(4, 0, 4, 2),
@@ -55,31 +57,65 @@ class MusicPlayerHomeScreen extends StatelessWidget {
                 subtitle: Text(currentSong.musicSinger),
                 trailing: BlocBuilder<MusicPlayerBloc, MusicPlayerState>(
                   builder: (context, state) {
-                    return IconButton(
-                      onPressed: () {
+                    if (isTileSelected[index] == true){
+                      return Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                              onPressed: () {
+                                BlocProvider.of<MusicPlayerBloc>(context).add(MusicPlayerChangeEvent());
 
-                        if (isTileSelected[index] == true) {
+                                for (int i = 0 ; i< isTileSelected.length; i++){
+                                  isTileSelected[i] = false;
+                                }
+
+                               /* print(previousIndex);*/
+                                isTileSelected[previousIndex] = true;
+                               /* print("Previous update in the isSelected list $isTileSelected");*/
+                                playSong(previousIndex);
+                              },
+                              icon: Icon(Icons.skip_previous)),
+                          IconButton(
+                            onPressed: () {
+                              BlocProvider.of<MusicPlayerBloc>(context)
+                                  .add(MusicPlayerPauseEvent());
+                                isTileSelected[index] = !isTileSelected[index];
+                                pauseSong();
+                              /*print(isTileSelected);*/
+
+                            },
+                            icon: Icon(Icons.pause),
+                          ),
+                          IconButton(
+                              onPressed: () {
+                                BlocProvider.of<MusicPlayerBloc>(context).add(MusicPlayerChangeEvent());
+                                for(int i = 0; i<isTileSelected.length; i++){
+                                  isTileSelected[i]= false;
+                                }
+                                isTileSelected[nextIndex] = true;
+                                playSong(nextIndex);
+                              },
+                              icon: Icon(Icons.skip_next)),
+                        ],
+                      );
+                    }
+                    else {
+                      return IconButton(onPressed: (){
+                        BlocProvider.of<MusicPlayerBloc>(context).add(MusicPlayerPlayEvent());
+                        if (isTileSelected[index] == true){
                           isTileSelected[index] = !isTileSelected[index];
                           pauseSong();
-                        } else {
-                          for (int i = 0; i < isTileSelected.length; i++) {
+                        }
+                        else {
+                          for (int i = 0 ; i< isTileSelected.length ; i++){
                             isTileSelected[i] = false;
                           }
                           isTileSelected[index] = true;
-                          playSong(currentSong.musicPath);
+                          playSong(index);
                         }
 
-                        /*print(isTileSelected);*/
-                        (state is MusicPlayerPauseState)
-                            ? BlocProvider.of<MusicPlayerBloc>(context)
-                                .add(MusicPlayerPlayEvent())
-                            : BlocProvider.of<MusicPlayerBloc>(context)
-                                .add(MusicPlayerPauseEvent());
-                      },
-                      icon: Icon((isTileSelected[index])
-                          ? Icons.pause
-                          : Icons.play_arrow),
-                    );
+                      }, icon: Icon(Icons.play_arrow));
+                    }
                   },
                 )),
           );
@@ -88,9 +124,11 @@ class MusicPlayerHomeScreen extends StatelessWidget {
     );
   }
 
-  Future<void> playSong(path) async {
+  Future<void> playSong(index) async {
     try {
-      await audioPlayer.setAsset(path);
+      /*print("mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm The index is $index");
+      print(isTileSelected);*/
+      await audioPlayer.setAsset(musicList[index].musicPath);
       await audioPlayer.play();
     } catch (e) {
       print('Error playing song: $e');

@@ -6,7 +6,7 @@ class MusicPlayerBloc extends Bloc<MusicPlayerEvent,MusicPlayerState>{
   MusicPlayerBloc():super(MusicPlayerInitialState()){
     on<MusicPlayerPlayEvent>((event, emit) => emit(MusicPlayerPlayState()));
     on<MusicPlayerPauseEvent>((event, emit) => emit(MusicPlayerPauseState()));
-
+    on<MusicPlayerChangeEvent>((event, emit) => emit(MusicPlayerChangeState()));
   }
 
 }
