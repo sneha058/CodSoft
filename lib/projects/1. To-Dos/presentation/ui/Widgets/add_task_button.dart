@@ -58,7 +58,7 @@ class AddTaskButton extends StatelessWidget {
         child: FloatingActionButton(
           onPressed: () {
 
-            //.......Explicitly passing the Bloc context to avoid overriding.....
+            //.......Explicitly passing the build context to avoid overriding.....
             createNewTask(context);
 
           },

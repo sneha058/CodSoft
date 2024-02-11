@@ -1,8 +1,5 @@
 import 'package:codsoft/projects/1.%20To-Dos/data/data_sources/boxes/to_do_box.dart';
 import 'package:codsoft/projects/1.%20To-Dos/data/model/to_do_model.dart';
-import 'package:codsoft/projects/1.%20To-Dos/presentation/bloc/todo_bloc.dart';
-import 'package:codsoft/projects/1.%20To-Dos/presentation/bloc/todo_event.dart';
-import 'package:codsoft/projects/1.%20To-Dos/presentation/bloc/todo_state.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -68,21 +65,21 @@ class TaskListWidget extends StatelessWidget {
             itemCount: box.length,
             itemBuilder: (context, index) {
 
-              var data = box.values.toList().cast<ToDoModel>();
+              var initialData = box.values.toList();
+              var reversedData = initialData.reversed.toList();
+              var data = reversedData.cast<ToDoModel>();
+
 
               return ListTile(
                 title: Text(data[index].task.toString()),
 
-                leading: BlocBuilder<ToDoBloc, ToDoState>(
-                  builder: (context, state) {
-                    return Checkbox(
-                        value: data[index].isCompleted,
+                leading:Checkbox(
+                        value: data[index].isCompleted ?? false,
                         onChanged:(value) {
                           taskStatus(context, data[index], value!);
                         }
-                    );
-                  },
-                ),
+                    ),
+
 
                 trailing: Container(
 

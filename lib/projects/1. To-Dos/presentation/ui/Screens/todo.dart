@@ -1,13 +1,9 @@
 import 'package:codsoft/projects/1.%20To-Dos/data/model/to_do_model.dart';
-import 'package:codsoft/projects/1.%20To-Dos/presentation/bloc/todo_bloc.dart';
-import 'package:codsoft/projects/1.%20To-Dos/presentation/bloc/todo_event.dart';
-import 'package:codsoft/projects/1.%20To-Dos/presentation/bloc/todo_state.dart';
 import 'package:codsoft/projects/1.%20To-Dos/presentation/ui/Widgets/add_task_button.dart';
 import 'package:codsoft/projects/1.%20To-Dos/presentation/ui/Widgets/tasks_list_widget.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -28,10 +24,7 @@ class ToDoApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
       ),
-      home: BlocProvider(
-        create: (context) => ToDoBloc(),
-        child: ToDoScreen(),
-      ),
+      home: ToDoScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
