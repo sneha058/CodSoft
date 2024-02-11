@@ -14,7 +14,9 @@ class TransactionCard extends StatelessWidget {
         builder: (context, box, _) {
           //..........casting all the data in the box as a list......
 
-          var data = box.values.toList().cast<ExpenseModel>();
+          var initialData = box.values.toList();
+          var reversedData = initialData.reversed.toList();
+          var data = reversedData.cast<ExpenseModel>();
 
           //.......converting the expense value into integer......
 
