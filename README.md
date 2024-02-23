@@ -17,4 +17,6 @@ I got to learn about various concepts while working on this tasks including:
 3. Bloc State Management
 4. CRUD operation using Hive Database
 
+The lib folder contains all the three tasks and you can run each individual task on you emulator separately.
+
 
