@@ -2,15 +2,19 @@
 
 A new Flutter project.
 
-## Getting Started
+## Tasks
 
-This project is a starting point for a Flutter application.
+This project contains multiple tasks assigned to me by CodSoft which are:
+1. ToDO App
+2. Expense Tracker
+3. Music Player 
 
-A few resources to get you started if this is your first Flutter project:
+## Features 
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+I got to learn about various concepts while working on this tasks including:
+1. Widget Hierarchy
+2. Responsive UI
+3. Bloc State Management
+4. CRUD operation using Hive Database
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
